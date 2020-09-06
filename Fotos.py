@@ -1,23 +1,26 @@
 from PIL import Image
 
-print('Example:\nFile: Photo1.png (with format)\nTake: 255 144 207 255\nPut: 0 86 133 255\nNew name: NewFilename (without format)\n')
-filename = input('File:')
+name = 'cnrs'
+format = 'png'
 
-image=Image.open(filename)
-pixels1=image.convert('RGBA').load()
-pixels2=[]
-width, height = image.size
+pixel1=(255,255,255,255)
+pixel2=(255,255,255,0)
 
-pixel1=tuple(map(int,input('Take: ').split()))
-pixel2=tuple(map(int,input('Put: ').split()))
-newname=input('New name: ')
+with Image.open(f'{name}.{format}') as image:
+	width, height = image.size
 
-for a in range(height):
-    for b in range(width):
-        if pixels1[b,a]==pixel1:
-            pixels2.append(pixel2)
-        else:
-            pixels2.append(pixels1[b,a])
+	pixels1=image.convert('RGBA').load()
+	pixels2=[]
 
-image.putdata(pixels2)
-image.save(newname+'.png')
+	for a in range(height):
+	    for b in range(width):
+	        if pixels1[b,a][2]<50:
+	            pixels2.append(pixel2)
+	        else:
+	            pixels2.append(pixels1[b,a])
+
+print(pixels1[5,5])
+
+with Image.new('RGBA', (width, height)) as image2:
+	image2.putdata(pixels2)
+	image2.save(f'{name}_new.png')

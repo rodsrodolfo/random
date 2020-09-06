@@ -17,3 +17,5 @@ def generate_points():
 ani = animation.FuncAnimation(fig, update, generate_points, interval=20)
 #ani.save('animation.gif', writer='imagemagick', fps=4);
 plt.show()
+
+#test
